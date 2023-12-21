@@ -1,8 +1,8 @@
-use infrastructure::schema::{ users, products, orders };
-use diesel::prelude::*;
-use std::cmp::{ Ord, Eq, PartialOrd, PartialEq };
-use rocket::serde::{ Deserialize, Serialize };
 use chrono::NaiveDateTime;
+use diesel::prelude::*;
+use infrastructure::schema::{orders, products, users};
+use rocket::serde::{Deserialize, Serialize};
+use std::cmp::{Eq, Ord, PartialEq, PartialOrd};
 
 // Representation of the 'users' table
 #[derive(Queryable, Serialize, Insertable, AsChangeset, Debug, Ord, Eq, PartialEq, PartialOrd)]

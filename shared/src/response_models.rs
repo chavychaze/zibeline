@@ -1,4 +1,4 @@
-use domain::models::{ User, Product, Order };
+use domain::models::{Order, Product, User};
 use rocket::serde::Serialize;
 
 #[derive(Serialize)]

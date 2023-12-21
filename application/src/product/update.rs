@@ -4,19 +4,19 @@ use infrastructure::establish_connection;
 use rocket::response::status::NotFound;
 use shared::response_models::{Response, ResponseBody};
 
-pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
-    use infrastructure::schema::products;
+pub fn update_product(product_id: i32) -> Result<Product, NotFound<String>> {
+    use infrastructure::schema::products::dsl::*;
 
-    match products::table
-        .find(product_id)
-        .first::<Product>(&mut establish_connection())
+    match diesel::update(products.find(product_id))
+        .set(is_delete.eq(false))
+        .get_result::<Product>(&mut establish_connection())
     {
         Ok(product) => Ok(product),
         Err(err) => match err {
             diesel::result::Error::NotFound => {
                 let response = Response {
                     body: ResponseBody::Message(format!(
-                        "Error selecting product with id {} - {}",
+                        "Error registering product with id {} - {}",
                         product_id, err
                     )),
                 };
@@ -26,22 +26,5 @@ pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
                 panic!("Database error - {}", err);
             }
         },
-    }
-}
-
-pub fn list_products() -> Vec<Product> {
-    use infrastructure::schema::products;
-
-    match products::table
-        .select(products::all_columns)
-        .load::<Product>(&mut establish_connection())
-    {
-        Ok(mut products) => {
-            products.sort();
-            products
-        }
-        Err(err) => {
-            panic!("Database error - {}", err);
-        }
     }
 }

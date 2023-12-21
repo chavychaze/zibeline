@@ -4,19 +4,19 @@ use infrastructure::establish_connection;
 use rocket::response::status::NotFound;
 use shared::response_models::{Response, ResponseBody};
 
-pub fn list_order(order_id: i32) -> Result<Order, NotFound<String>> {
-    use infrastructure::schema::orders;
+pub fn update_order(order_id: i32) -> Result<Order, NotFound<String>> {
+    use infrastructure::schema::orders::dsl::*;
 
-    match orders::table
-        .find(order_id)
-        .first::<Order>(&mut establish_connection())
+    match diesel::update(orders.find(order_id))
+        .set(is_delivered.eq(true))
+        .get_result::<Order>(&mut establish_connection())
     {
         Ok(order) => Ok(order),
         Err(err) => match err {
             diesel::result::Error::NotFound => {
                 let response = Response {
                     body: ResponseBody::Message(format!(
-                        "Error selecting order with id {} - {}",
+                        "Error registering order with id {} - {}",
                         order_id, err
                     )),
                 };
@@ -26,22 +26,5 @@ pub fn list_order(order_id: i32) -> Result<Order, NotFound<String>> {
                 panic!("Database error - {}", err);
             }
         },
-    }
-}
-
-pub fn list_orders() -> Vec<Order> {
-    use infrastructure::schema::orders;
-
-    match orders::table
-        .select(orders::all_columns)
-        .load::<Order>(&mut establish_connection())
-    {
-        Ok(mut orders) => {
-            orders.sort();
-            orders
-        }
-        Err(err) => {
-            panic!("Database error - {}", err);
-        }
     }
 }
