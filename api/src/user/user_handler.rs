@@ -1,7 +1,7 @@
 use shared::response_models::{Response, ResponseBody};
-use application::user::{create, read};
+use application::user::{create, read, update, delete };
 use domain::models::{User, NewUser};
-use rocket::{get, post};
+use rocket::{get, post, delete, patch};
 use rocket::response::status::{NotFound, Created};
 use rocket::serde::json::Json;
 
@@ -21,7 +21,23 @@ pub fn list_user_handler(user_id: i32) -> Result<String, NotFound<String>> {
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[post("/new_user", format = "application/json", data = "<user>")]
+#[patch("/user/<user_id>")]
+pub fn update_user_handler(user_id: i32) -> Result<String, NotFound<String>> {
+    let user = update::update_user(user_id)?; 
+    let response = Response { body: ResponseBody::User(user) };
+
+    Ok(serde_json::to_string(&response).unwrap())
+}
+
+#[delete("/user/<user_id>")]
+pub fn delete_user_handler(user_id: i32) -> Result<String, NotFound<String>> {
+    let users = delete::delete_user(user_id)?;
+    let response = Response { body: ResponseBody::Users(users) };
+
+    Ok(serde_json::to_string(&response).unwrap())
+}
+
+#[post("/user", format = "application/json", data = "<user>")]
 pub fn create_user_handler(user: Json<NewUser>) -> Created<String> {
     create::create_user(user)
 }

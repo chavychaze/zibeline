@@ -1,7 +1,7 @@
 use shared::response_models::{Response, ResponseBody};
-use application::order::{create, read};
+use application::order::{create, read, update, delete};
 use domain::models::{Order, NewOrder};
-use rocket::{get, post};
+use rocket::{get, post, patch, delete};
 use rocket::response::status::{NotFound, Created};
 use rocket::serde::json::Json;
 
@@ -21,7 +21,23 @@ pub fn list_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[post("/new_order", format = "application/json", data = "<order>")]
+#[patch("/update/<order_id>")]
+pub fn update_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
+    let order = update::update_order(order_id)?; 
+    let response = Response { body: ResponseBody::Order(order) };
+
+    Ok(serde_json::to_string(&response).unwrap())
+}
+
+#[delete("/delete/<order_id>")]
+pub fn delete_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
+    let orders = delete::delete_order(order_id)?;
+    let response = Response { body: ResponseBody::Orders(orders) };
+
+    Ok(serde_json::to_string(&response).unwrap())
+}
+
+#[post("/order", format = "application/json", data = "<order>")]
 pub fn create_order_handler(order: Json<NewOrder>) -> Created<String> {
     create::create_order(order)
 }
