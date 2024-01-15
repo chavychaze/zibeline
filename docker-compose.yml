@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: container-pg
+    container_name: zibelina-store-pg
     image: postgres:16.1
     environment:
       POSTGRES_USER: user

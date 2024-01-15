@@ -25,7 +25,7 @@ pub fn list_product_handler(product_id: i32) -> Result<String, NotFound<String>>
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[patch("/update/<product_id>")]
+#[patch("/product/<product_id>")]
 pub fn update_product_handler(product_id: i32) -> Result<String, NotFound<String>> {
     let product = update::update_product(product_id)?;
     let response = Response {
@@ -35,7 +35,7 @@ pub fn update_product_handler(product_id: i32) -> Result<String, NotFound<String
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[delete("/delete/<product_id>")]
+#[delete("/product/<product_id>")]
 pub fn delete_product_handler(product_id: i32) -> Result<String, NotFound<String>> {
     let products = delete::delete_product(product_id)?;
     let response = Response {

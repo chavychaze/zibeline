@@ -25,7 +25,7 @@ pub fn list_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[patch("/update/<order_id>")]
+#[patch("/order/<order_id>")]
 pub fn update_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
     let order = update::update_order(order_id)?;
     let response = Response {
@@ -35,7 +35,7 @@ pub fn update_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
     Ok(serde_json::to_string(&response).unwrap())
 }
 
-#[delete("/delete/<order_id>")]
+#[delete("/order/<order_id>")]
 pub fn delete_order_handler(order_id: i32) -> Result<String, NotFound<String>> {
     let orders = delete::delete_order(order_id)?;
     let response = Response {
