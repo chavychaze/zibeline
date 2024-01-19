@@ -17,7 +17,7 @@ pub fn list_users_handler() -> String {
 
 #[get("/user/<user_id>")]
 pub fn list_user_handler(user_id: i32) -> Result<String, NotFound<String>> {
-    let user = read::list_user(user_id)?;
+    let user = read::list_user_by_id(user_id)?;
     let response = Response {
         body: ResponseBody::User(user),
     };
