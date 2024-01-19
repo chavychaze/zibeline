@@ -6,3 +6,4 @@ members = [
   "application",
   "shared",
 ]
+default-run = "server"
