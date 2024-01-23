@@ -5,9 +5,9 @@ use rocket::response::status::NotFound;
 use shared::response_models::{Response, ResponseBody};
 
 pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
-    use infrastructure::schema::products;
+    use infrastructure::schema::product;
 
-    match products::table
+    match product::table
         .find(product_id)
         .first::<Product>(&mut establish_connection())
     {
@@ -30,10 +30,10 @@ pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
 }
 
 pub fn list_products() -> Vec<Product> {
-    use infrastructure::schema::products;
+    use infrastructure::schema::product;
 
-    match products::table
-        .select(products::all_columns)
+    match product::table
+        .select(product::all_columns)
         .load::<Product>(&mut establish_connection())
     {
         Ok(mut products) => {

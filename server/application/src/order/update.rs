@@ -8,7 +8,7 @@ pub fn update_order(order_id: i32) -> Result<Order, NotFound<String>> {
     use infrastructure::schema::orders::dsl::*;
 
     match diesel::update(orders.find(order_id))
-        .set(is_delivered.eq(true))
+        .set(status.eq("delivered"))
         .get_result::<Order>(&mut establish_connection())
     {
         Ok(order) => Ok(order),

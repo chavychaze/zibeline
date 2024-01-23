@@ -5,12 +5,12 @@ use rocket::response::status::NotFound;
 use shared::response_models::{Response, ResponseBody};
 
 pub fn delete_product(product_id: i32) -> Result<Vec<Product>, NotFound<String>> {
-    use infrastructure::schema::products;
-    use infrastructure::schema::products::dsl::*;
+    use infrastructure::schema::product;
+    use infrastructure::schema::product::dsl::*;
 
     let response: Response;
 
-    let num_deleted = match diesel::delete(products.filter(id.eq(product_id)))
+    let num_deleted = match diesel::delete(product.filter(id.eq(product_id)))
         .execute(&mut establish_connection())
     {
         Ok(count) => count,
@@ -31,8 +31,8 @@ pub fn delete_product(product_id: i32) -> Result<Vec<Product>, NotFound<String>>
     };
 
     if num_deleted > 0 {
-        match products::table
-            .select(products::all_columns)
+        match product::table
+            .select(product::all_columns)
             .load::<Product>(&mut establish_connection())
         {
             Ok(mut products_) => {

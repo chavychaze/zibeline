@@ -8,7 +8,7 @@ pub fn update_user(user_id: i32) -> Result<User, NotFound<String>> {
     use infrastructure::schema::users::dsl::*;
 
     match diesel::update(users.find(user_id))
-        .set(is_registered.eq(true))
+        .set(is_delete.eq(false))
         .get_result::<User>(&mut establish_connection())
     {
         Ok(user) => Ok(user),

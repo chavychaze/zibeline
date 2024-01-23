@@ -6,11 +6,11 @@ use rocket::serde::json::Json;
 use shared::response_models::{Response, ResponseBody};
 
 pub fn create_product(product: Json<NewProduct>) -> Created<String> {
-    use infrastructure::schema::products;
+    use infrastructure::schema::product;
 
     let product = product.into_inner();
 
-    match diesel::insert_into(products::table)
+    match diesel::insert_into(product::table)
         .values(&product)
         .get_result::<Product>(&mut establish_connection())
     {
