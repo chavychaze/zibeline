@@ -3,7 +3,7 @@ use domain::models::{NewUser, User};
 use rocket::response::status::{Created, NotFound};
 use rocket::serde::json::Json;
 use rocket::{delete, get, patch, post};
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 #[get("/users")]
 pub fn list_users_handler() -> String {

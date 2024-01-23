@@ -3,7 +3,7 @@ use domain::models::{NewOrder, Order};
 use rocket::response::status::{Created, NotFound};
 use rocket::serde::json::Json;
 use rocket::{delete, get, patch, post};
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 #[get("/orders")]
 pub fn list_orders_handler() -> String {

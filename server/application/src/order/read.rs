@@ -2,7 +2,7 @@ use diesel::prelude::*;
 use domain::models::Order;
 use infrastructure::establish_connection;
 use rocket::response::status::NotFound;
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 pub fn list_order(order_id: i32) -> Result<Order, NotFound<String>> {
     use infrastructure::schema::orders;

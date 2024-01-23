@@ -2,7 +2,7 @@ use diesel::prelude::*;
 use domain::models::User;
 use infrastructure::establish_connection;
 use rocket::response::status::NotFound;
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 pub fn delete_user(user_id: i32) -> Result<Vec<User>, NotFound<String>> {
     use infrastructure::schema::users;

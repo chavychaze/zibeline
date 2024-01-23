@@ -3,7 +3,7 @@ use domain::models::{NewOrder, Order};
 use infrastructure::establish_connection;
 use rocket::response::status::Created;
 use rocket::serde::json::Json;
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 pub fn create_order(order: Json<NewOrder>) -> Created<String> {
     use infrastructure::schema::orders;

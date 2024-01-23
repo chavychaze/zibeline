@@ -3,7 +3,7 @@ use domain::models::{NewProduct, Product};
 use rocket::response::status::{Created, NotFound};
 use rocket::serde::json::Json;
 use rocket::{delete, get, patch, post};
-use shared::response_models::{Response, ResponseBody};
+use shared::communication::response_models::{Response, ResponseBody};
 
 #[get("/products")]
 pub fn list_products_handler() -> String {
