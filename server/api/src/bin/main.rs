@@ -7,7 +7,7 @@ use api::user::user_handler;
 #[launch]
 fn rocket() -> _ {
     rocket::build().mount(
-        "/store",
+        "/rest/v1/api",
         routes![
             // Users
             user_handler::list_users_handler,

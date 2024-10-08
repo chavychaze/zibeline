@@ -1,17 +1,15 @@
-version: '3.9'
-
 services:
-  zibelina-store-api:
-    container_name: zibelina-store-api
-    build: 
-      context: .
-      dockerfile: ./server/Dockerfile
-      args: 
-        DATABASE_URL: postgres://user:password@localhost/zibelina
-    ports:
-      - '8000:8000'
-    depends_on:
-      - zibelina-store-pg
+  # zibelina-store-api:
+  #   container_name: zibelina-store-api
+  #   build: 
+  #     context: .
+  #     dockerfile: ./server/Dockerfile
+  #     args: 
+  #       DATABASE_URL: postgres://user:password@localhost/zibelina
+  #   ports:
+  #     - '8000:8000'
+  #   depends_on:
+  #     - zibelina-store-pg
 
   zibelina-store-pg:
     container_name: zibelina-store-pg
