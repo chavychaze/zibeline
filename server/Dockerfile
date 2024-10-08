@@ -1,10 +1,9 @@
 # Build Stage
-FROM rust:1.75-buster as builder
+FROM rust:1.81.0 as builder
 
 WORKDIR /app
 
 ARG DATABASE_URL
-
 ENV DATABASE_URL=$DATABASE_URL
 
 COPY ./server /app
@@ -16,6 +15,6 @@ FROM debian:buster-slim
 
 WORKDIR /usr/local/bin
 
-COPY --from=builder /app/target/release/zibelina_store .
+COPY --from=builder /app/target/release/* .
 
-CMD [ "./zibelina_store" ]
+CMD [ "./main" ]
