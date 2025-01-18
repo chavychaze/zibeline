@@ -4,8 +4,6 @@ BEGIN;
 INSERT INTO users (
     name,
     email,
-    role,
-    password_hash,
     address,
     phone,
     is_registered,
@@ -15,8 +13,6 @@ INSERT INTO users (
 ) VALUES (
     'Super Admin',
     'super.admin@zibelina.com',
-    'super_admin',
-    '$argon2id$v=19$m=16,t=2,p=1$YXNkYXNkYXNkYXNk$HKz1KL3mFJm8PdYOh9OZxw', -- password: superadmin123
     'Admin Office',
     '+1234567890',
     true,
@@ -29,8 +25,6 @@ INSERT INTO users (
 INSERT INTO users (
     name,
     email,
-    role,
-    password_hash,
     address,
     phone,
     is_registered,
@@ -40,8 +34,6 @@ INSERT INTO users (
 ) VALUES (
     'Admin User',
     'admin@zibelina.com',
-    'admin',
-    '$argon2id$v=19$m=16,t=2,p=1$YXNkYXNkYXNkYXNk$HKz1KL3mFJm8PdYOh9OZxw', -- password: admin123
     'Admin Office',
     '+1234567891',
     true,
@@ -63,8 +55,6 @@ WITH inserted_users AS (
         email,
         address,
         phone,
-        role,
-        password_hash,
         is_registered,
         created_at,
         updated_at,
@@ -75,8 +65,6 @@ WITH inserted_users AS (
             'john@example.com',
             '123 Main St',
             '+1234567890',
-            'user',
-            '$argon2id$v=19$m=16,t=2,p=1$YXNkYXNkYXNkYXNk$HKz1KL3mFJm8PdYOh9OZxw', -- password: user123
             true,
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP,
@@ -87,8 +75,6 @@ WITH inserted_users AS (
             'jane@example.com',
             '456 Oak Ave',
             '+1987654321',
-            'user',
-            '$argon2id$v=19$m=16,t=2,p=1$YXNkYXNkYXNkYXNk$HKz1KL3mFJm8PdYOh9OZxw', -- password: user123
             true,
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP,
@@ -99,8 +85,6 @@ WITH inserted_users AS (
             NULL,
             NULL,
             NULL,
-            'user',
-            '$argon2id$v=19$m=16,t=2,p=1$YXNkYXNkYXNkYXNk$HKz1KL3mFJm8PdYOh9OZxw', -- password: user123
             false,
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP,

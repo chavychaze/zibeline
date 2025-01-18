@@ -1,15 +1,36 @@
 services:
-  # zibelina-store-api:
-  #   container_name: zibelina-store-api
-  #   build: 
-  #     context: .
-  #     dockerfile: ./server/Dockerfile
-  #     args: 
-  #       DATABASE_URL: postgres://user:password@localhost/zibelina
-  #   ports:
-  #     - '8000:8000'
-  #   depends_on:
-  #     - zibelina-store-pg
+  zibelina-store-ui:
+    container_name: zibelina-store-ui
+    build:
+      context: .
+      dockerfile: ./ui/Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - zibelina-store-api
+    environment:
+      - API_URL=http://zibelina-store-api:8000
+    networks:
+      - zibelina-network
+
+  zibelina-store-api:
+    container_name: zibelina-store-api
+    build: 
+      context: .
+      dockerfile: ./server/Dockerfile
+      args: 
+        DATABASE_URL: postgres://user:password@zibelina-store-pg/zibelina
+    ports:
+      - '8000:8000'
+    environment:
+      DATABASE_URL: postgres://user:password@zibelina-store-pg/zibelina
+      RUST_LOG: debug
+    depends_on:
+      zibelina-store-pg:
+        condition: service_healthy
+    networks:
+      - zibelina-network
+    restart: unless-stopped
 
   zibelina-store-pg:
     container_name: zibelina-store-pg
@@ -22,24 +43,15 @@ services:
       - '5432:5432'
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d zibelina"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - zibelina-network
     restart: unless-stopped
 
-volumes:
-  postgres-data:
-
-# services:
-#   postgres:
-#     container_name: zibelina-store-pg
-#     image: postgres:16.1
-#     environment:
-#       POSTGRES_USER: user
-#       POSTGRES_PASSWORD: password
-#       POSTGRES_DB: zibelina
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - ./postgres-data:/var/lib/postgresql/data
-#     restart: unless-stopped
-
-# volumes:
-#   postgres-data:
+networks:
+  zibelina-network:
+    driver: bridge
