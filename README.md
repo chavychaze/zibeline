@@ -164,23 +164,37 @@ make docs           # Generate documentation
 ## Project Structure
 ```
 zibelina-store/
-├── .env                    # Environment variables
-├── .github/                # GitHub Actions workflows
-├── docker-compose.yml      # Docker configuration
-├── docs/                   # Documentation
-├── migrations/ 
-├── server/                 # Backend API (Rust)
-│   ├── api/                # Source code
-|       ├── src/                # Source code
-│       └── tests/              # UI tests
-│   └── tests/              # API tests
-├── ui/                     # Frontend (Yew/WebAssembly)
-│   ├── src/                # Source code
-│   └── tests/              # UI tests
-└── scripts/                # Management scripts
-    ├── lib/                # Lua utilities
-    └── commands/           # Lua command modules
-    └── server_setup/       # Server setup fo Lua modules
+├── docs
+├── scripts
+│   ├── commands
+│   ├── lib
+│   └── server_setup
+├── server
+│   ├── api
+│   │   └── src
+│   │       ├── bin
+│   │       ├── order
+│   │       ├── product
+│   │       └── user
+│   ├── application
+│   │   └── src
+│   │       ├── order
+│   │       ├── product
+│   │       └── user
+│   ├── domain
+│   │   └── src
+│   ├── infrastructure
+│   │   ├── migrations
+│   │   │   ├── 00000000000000_diesel_initial_setup
+│   │   │   ├── 2023-12-19-134024_users
+│   │   │   ├── 2023-12-19-140113_products
+│   │   │   └── 2023-12-19-140810_orders
+│   │   ├── seeds
+│   │   └── src
+│   └── shared
+│       └── src
+└── ui
+    └── src
 ```
 
 ## Configuration
